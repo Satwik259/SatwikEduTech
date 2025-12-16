@@ -1,9 +1,11 @@
+import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { authMiddleware } from "@/middleware/auth";
 import { generateFeedback } from "@/lib/ai";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const user = authMiddleware(req, ["STUDENT"]);
+
   const { assignmentId, content } = await req.json();
 
   const submission = await prisma.submission.create({
@@ -16,6 +18,7 @@ export async function POST(req: Request) {
 
   try {
     const feedback = await generateFeedback(content);
+
     await prisma.submission.update({
       where: { id: submission.id },
       data: { aiFeedback: feedback },
