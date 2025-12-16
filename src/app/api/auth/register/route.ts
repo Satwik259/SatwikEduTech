@@ -2,8 +2,9 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
-  const { name, email, password, role } = await req.json();
+  console.log("DATABASE_URL AT RUNTIME:", process.env.DATABASE_URL);
 
+  const { name, email, password, role } = await req.json();
   const hashed = await bcrypt.hash(password, 10);
 
   const user = await prisma.user.create({
