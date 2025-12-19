@@ -84,7 +84,6 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        {/* Login navigation */}
         <p className="text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link
